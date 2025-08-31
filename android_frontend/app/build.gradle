@@ -1,0 +1,19 @@
+plugins {
+    // Apply Android application plugin to allow conventional test task configuration alongside Declarative Gradle
+    id 'com.android.application' apply false
+}
+
+allprojects {
+    // Configure all Test tasks to use JUnit Platform for Jupiter tests discovery
+    tasks.matching { it.name.toLowerCase().contains('test') && it instanceof Test }.configureEach {
+        // PUBLIC_INTERFACE
+        // Enable JUnit Platform to discover and run JUnit 5 (Jupiter) tests.
+        useJUnitPlatform()
+        // Optional: keep Gradle from failing if no tests are discovered in certain variants
+        // You can comment this out if you prefer failure on no tests:
+        // it.failOnNoMatchingTests(false)
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+}
