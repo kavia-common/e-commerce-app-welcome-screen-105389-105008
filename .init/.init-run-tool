@@ -1,0 +1,4 @@
+{
+    "command": "./gradlew installDebug",
+    "working_directory": "/home/kavia/workspace/code-generation/e-commerce-app-welcome-screen-105389-105008/android_frontend"
+}
