@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Sample Declarative Gradle Android App</string>
+    <string name="app_name">ECommerce App</string>
+    <string name="app_name_display">ShopSphere</string>
+    <string name="app_tagline">Your Shopping Universe</string>
+    <string name="app_logo">Application Logo</string>
+    <string name="loading_text">Loading your shopping experience...</string>
+    <string name="welcome_message">Welcome to ShopSphere</string>
 </resources>

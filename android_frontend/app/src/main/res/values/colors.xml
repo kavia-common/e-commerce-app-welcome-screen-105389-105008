@@ -1,0 +1,16 @@
+<resources>
+    <!-- E-commerce App Color Scheme -->
+    <color name="primary">#1976D2</color>
+    <color name="secondary">#424242</color>
+    <color name="accent">#FFC107</color>
+    
+    <!-- Additional colors for better UI -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_light">#F5F5F5</color>
+    <color name="gray_dark">#212121</color>
+    
+    <!-- Primary color variants -->
+    <color name="primary_light">#5CA7F8</color>
+    <color name="primary_dark">#004BA0</color>
+</resources>
