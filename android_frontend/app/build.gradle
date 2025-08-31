@@ -1,19 +1,72 @@
 plugins {
-    // Apply Android application plugin to allow conventional test task configuration alongside Declarative Gradle
-    id 'com.android.application' apply false
+    // Apply Android application and Kotlin Android plugins so standard Android tasks are created
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
 
-allprojects {
-    // Configure all Test tasks to use JUnit Platform for Jupiter tests discovery
-    tasks.matching { it.name.toLowerCase().contains('test') && it instanceof Test }.configureEach {
-        // PUBLIC_INTERFACE
-        // Enable JUnit Platform to discover and run JUnit 5 (Jupiter) tests.
-        useJUnitPlatform()
-        // Optional: keep Gradle from failing if no tests are discovered in certain variants
-        // You can comment this out if you prefer failure on no tests:
-        // it.failOnNoMatchingTests(false)
-        testLogging {
-            events "passed", "skipped", "failed"
+android {
+    namespace 'org.example.app'
+    compileSdkVersion 34
+
+    defaultConfig {
+        applicationId "org.gradle.experimental.android.app"
+        minSdkVersion 30
+        targetSdkVersion 34
+        versionCode 1
+        versionName "0.1"
+
+        // Enable unit tests to include Android resources if needed by tests
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            // keep default debug settings
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    // Ensure unit test variants like testDebugUnitTest are created
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            all {
+                // PUBLIC_INTERFACE
+                // Enable JUnit Platform (Jupiter) for all Unit Test tasks
+                useJUnitPlatform()
+                testLogging {
+                    events "passed", "skipped", "failed"
+                }
+            }
+        }
+    }
+
+    // Kotlin toolchain compatibility
+    compileOptions {
+        // Enable core library desugaring since dependent modules require it
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
+dependencies {
+    implementation "org.apache.commons:commons-text:1.11.0"
+    implementation project(":utilities")
+
+    // Core library desugaring support for Java 8+ APIs on older Android devices
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.4"
+
+    // JUnit Jupiter API and engine for unit tests
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.10.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.10.2"
+
+    // JUnit Platform launcher - some Gradle/IDE setups need this to discover tests
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.10.2"
 }
